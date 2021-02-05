@@ -14,7 +14,7 @@ public class ShooterVelocityPowerTest extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        robot = new FullRobot(this, hardwareMap);
+        robot = new FullRobot(this, hardwareMap, telemetry);
         time = new ElapsedTime();
         waitForStart();
         double powerIncrement;

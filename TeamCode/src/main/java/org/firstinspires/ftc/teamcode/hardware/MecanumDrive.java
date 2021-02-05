@@ -3,19 +3,28 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-//import org.firstinspires.ftc.teamcode.odometry.InitialPosCalcs;
 
-public class MecanumDrive {
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.odometry.InitialPosCalcs;
+import org.firstinspires.ftc.teamcode.odometry.Pos2d;
+
+import java.text.DateFormat;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+
+public class MecanumDrive extends InitialPosCalcs {
     public static DcMotorEx frontR;
     public static DcMotorEx frontL;
     public static DcMotorEx backR;
     public static DcMotorEx backL;
-
-
+    //public ElapsedTime eTime;
+    LinearOpMode opMode;
+    Telemetry telemetry;
     LinearOpMode OpMode;
 
-    public MecanumDrive(FullRobot robot, HardwareMap map, LinearOpMode OpMode){
-        //super(telemetry);
+    public MecanumDrive(FullRobot robot, HardwareMap map, Telemetry telemetry, LinearOpMode OpMode){
+        super(telemetry);
         this.OpMode = OpMode;
 // match with phone names
         frontR = map.get(DcMotorEx.class, "FR");
@@ -23,7 +32,7 @@ public class MecanumDrive {
         backR = map.get(DcMotorEx.class, "BR");
         backL = map.get(DcMotorEx.class, "BL");
 
-//epic brake power
+//add brake power
         frontR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -68,35 +77,49 @@ public class MecanumDrive {
     public double getRawRightPosition() {
         return frontR.getCurrentPosition();
     }
+
 //determine position in cm
-public double getLeftPosition() {
-    return ((Math.PI * 60.54) / 1440 * frontR.getCurrentPosition()) / 10;
-}
+    //Distances in inches currently to check distance.  will change to cm when implementing
+    public double getLeftPosition() {
+    return ((Math.PI * 2.83) / 1440 * frontL.getCurrentPosition());
+    }
 
     public double getCenterPosition() {
-        return (((Math.PI * 60.54) / 1440) * backL.getCurrentPosition()) / 10;
+        return (((Math.PI * 2.83) / 1440) * backL.getCurrentPosition());
     }
 
     public double getRightPosition() {
-        return -((Math.PI * 60.54) / 1440 * frontR.getCurrentPosition()) / 10;
+        return (-(Math.PI * 2.83) / 1440 * frontR.getCurrentPosition());
     }
 
-//Determine Change in Theta
-    public double L = getRawLeftPosition();
-    public double R = getRawRightPosition();
-    public double M = getRawCenterPosition();
-
-//All values in inches
-//Declare values(W is constant)
-    public double W = 10;
-    private double DTheta = 0;
-    private double RCenter = 0;
-    private double XSides = 0;
-    private double YSides = 0;
-
-    //Find change in theta
-    public double getDTheta(){
-        return (R - L)/W;
+    public Pos2d getPosition() {
+        //update();
+        return getPosEstimate();
     }
-    DTheta = getDTheta();
+
+    /**
+     * creates a unique filename for logging
+     *
+     * @param fileName  orig filename
+     * @param extension file extension
+     * @return a unique filename
+     */
+    private String createUniqueFileName(String fileName, String extension) {
+        return fileName + DateFormat.getDateTimeInstance().format(new Date()) + extension;
+    }
+
+    /**
+     * Overides the method in TrigThreeWheelLocalizer so that the localizer can have access to the
+     * encoder values of each tracking wheel.
+     *
+     * @return
+     */
+    @Override
+    public List<Double> getWheelPositions() {
+        return Arrays.asList(
+                getLeftPosition(),
+                getRightPosition(),
+                getCenterPosition()
+        );
+    }
 }

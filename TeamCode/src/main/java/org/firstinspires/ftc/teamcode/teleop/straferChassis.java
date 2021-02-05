@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.hardware.FullRobot;
+import org.firstinspires.ftc.teamcode.odometry.InitialPosCalcs;
 
 import java.lang.annotation.ElementType;
 
@@ -14,17 +15,21 @@ public class straferChassis extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException{
-        robot = new FullRobot(this, hardwareMap);
+        robot = new FullRobot(this, hardwareMap, telemetry);
         time = new ElapsedTime();
 
         robot.mecanumDrive.reset();
         waitForStart();
 
         while(!isStopRequested()){
-            telemetry.addData("leftEncoder", robot.mecanumDrive.getRawLeftPosition());
-            telemetry.addData("rightEncoder", robot.mecanumDrive.getRawRightPosition());
-            telemetry.addData("centerEncoder", robot.mecanumDrive.getRawCenterPosition());
+            telemetry.addData("leftEncoder", robot.mecanumDrive.getLeftPosition());
+            telemetry.addData("rightEncoder", robot.mecanumDrive.getRightPosition());
+            telemetry.addData("centerEncoder", robot.mecanumDrive.getCenterPosition());
+            telemetry.addData("dX", robot.mecanumDrive.getPosition().getX());
+            //telemetry.addData("x", InitialPosCalcs.getDeltaX());
+            telemetry.addData("dY", robot.mecanumDrive.getPosition().getY());
             telemetry.update();
+
 
             //Basic Driving Controls
             double LeftY = -gamepad1.left_stick_y;
@@ -73,5 +78,6 @@ public class straferChassis extends LinearOpMode {
             robot.mecanumDrive.backL.setPower(-backLeft);
             robot.mecanumDrive.backR.setPower(backRight);
         }
+
     }
 }
