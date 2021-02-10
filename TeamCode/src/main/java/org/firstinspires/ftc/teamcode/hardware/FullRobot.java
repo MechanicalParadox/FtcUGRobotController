@@ -8,7 +8,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class FullRobot {
     public MecanumDrive mecanumDrive;
-    //public FlywheelTestMotor flywheelTestMotor;
+    public IntakeTransition intake;
+    public Launchpad launchpad;
 
     private OpMode master;
     public Thread subsystemExector;
@@ -17,7 +18,7 @@ public class FullRobot {
         this.master = OpMode;
 
         mecanumDrive = new MecanumDrive(this, map, telemetry, OpMode);
-        //flywheelTestMotor = new FlywheelTestMotor(this, map, OpMode);
-
+        intake = new IntakeTransition(this, map, OpMode);
+        launchpad = new Launchpad(this, map, OpMode);
     }
 }
