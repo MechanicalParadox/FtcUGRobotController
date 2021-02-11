@@ -104,7 +104,7 @@ public class Comp1Tele extends LinearOpMode {
             /////////////////////////////////////////////////////////////////////
 
             //Shooter
-            if (gamepad1.left_trigger >= 0.25){
+            if (gamepad2.left_trigger >= 0.25){
                 robot.launchpad.shoot(1);//need to confirm
             } else if(gamepad2.a){              //Test Powers!!!!
                 robot.launchpad.shoot(0.75);
