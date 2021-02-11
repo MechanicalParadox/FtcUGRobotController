@@ -62,12 +62,7 @@ public class Comp1Tele extends LinearOpMode {
             backLeft /= largestVariable;
             backRight /= largestVariable;
 
-            if(gamepad1.right_trigger > 0){
-                frontLeft /= 2;
-                frontRight /= 2;
-                backLeft /= 2;
-                backRight /= 2;
-            } else if (gamepad1.left_trigger > 0){
+            if (gamepad1.left_trigger > 0){
                 frontLeft /= 4;
                 frontRight /= 4;
                 backLeft /= 4;
@@ -83,7 +78,7 @@ public class Comp1Tele extends LinearOpMode {
             // Intakes
             if (gamepad1.left_bumper == true){
                 robot.intake.intakeFront(0.75);
-            } else if (gamepad1.left_trigger >= 0.25){
+            } else if (gamepad1.right_trigger >= 0.25){
                 robot.intake.intakeFront(-0.75);
             } else {
                 robot.intake.intakeFront(0);
@@ -111,7 +106,7 @@ public class Comp1Tele extends LinearOpMode {
             }  else if(gamepad2.b){              //Test Powers!!!!
                 robot.launchpad.shoot(0.5);
             }  else if(gamepad2.x){              //Test Powers!!!!
-                robot.launchpad.shoot(0.25);
+                robot.launchpad.shoot(0.60);
             }  else if(gamepad2.y){              //Test Powers!!!!
                 robot.launchpad.shoot(0.9);
             } else{
