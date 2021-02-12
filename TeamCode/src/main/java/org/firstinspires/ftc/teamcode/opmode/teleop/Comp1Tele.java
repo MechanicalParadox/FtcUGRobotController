@@ -21,13 +21,7 @@ public class Comp1Tele extends LinearOpMode {
         robot.mecanumDrive.reset();
         waitForStart();
 
-        while(!isStopRequested()){
-            telemetry.addData("leftEncoder", robot.mecanumDrive.getLeftPosition());
-            telemetry.addData("rightEncoder", robot.mecanumDrive.getRightPosition());
-            telemetry.addData("centerEncoder", robot.mecanumDrive.getCenterPosition());
-            telemetry.update();
-
-
+        while(!isStopRequested()) {
             /////////////////////////////////////////////////////////////////////
 
             //************************ GAMEPAD 1 DRIVE ************************//
@@ -37,6 +31,16 @@ public class Comp1Tele extends LinearOpMode {
             double LeftY = -gamepad1.left_stick_y;
             double LeftX = gamepad1.left_stick_x;
             double RightX = gamepad1.right_stick_x;
+            //Deadzones
+            if (Math.abs(LeftX) <= 0.05) {
+                LeftX = 0;
+            }
+            if (Math.abs(LeftY) <= 0.05) {
+                LeftY = 0;
+            }
+            if (Math.abs(RightX) <= 0.05) {
+                RightX = 0;
+            }
 
             // Calculates direction each word should turn(range -3 to 3)
             double frontLeft = LeftY + LeftX + RightX;
@@ -45,7 +49,10 @@ public class Comp1Tele extends LinearOpMode {
             double backRight = LeftY + LeftX - RightX;
 
             // Calculates the motor which requires the most power
-            double largestVariable = Math.abs(frontLeft);
+            double largestVariable = 1.0; //Math.abs(frontLeft);
+
+            if (largestVariable < Math.abs(frontLeft))
+                largestVariable = Math.abs(frontLeft);
 
             if (largestVariable < Math.abs(frontRight))
                 largestVariable = Math.abs(frontRight);
@@ -62,7 +69,7 @@ public class Comp1Tele extends LinearOpMode {
             backLeft /= largestVariable;
             backRight /= largestVariable;
 
-            if (gamepad1.left_trigger > 0){
+            if (gamepad1.a) {
                 frontLeft /= 4;
                 frontRight /= 4;
                 backLeft /= 4;
@@ -76,19 +83,19 @@ public class Comp1Tele extends LinearOpMode {
             robot.mecanumDrive.backR.setPower(backRight);
 
             // Intakes
-            if (gamepad1.left_bumper == true){
+            if (gamepad1.left_bumper == true) {
                 robot.intake.intakeFront(0.75);
-            } else if (gamepad1.right_trigger >= 0.25){
+            } else if (gamepad1.right_trigger >= 0.25) {
                 robot.intake.intakeFront(-0.75);
             } else {
                 robot.intake.intakeFront(0);
             }
 
-            if (gamepad1.right_bumper == true){
+            if (gamepad1.right_bumper == true) {
                 robot.intake.intakeBack(0.75);
             } else if (gamepad1.right_trigger >= 0.25) {
                 robot.intake.intakeBack(-0.75);
-            } else  {
+            } else {
                 robot.intake.intakeBack(0);
             }
 
@@ -99,28 +106,34 @@ public class Comp1Tele extends LinearOpMode {
             /////////////////////////////////////////////////////////////////////
 
             //Shooter
-            if (gamepad2.left_trigger >= 0.25){
+            if (gamepad2.left_trigger >= 0.25) {
                 robot.launchpad.shoot(1);//need to confirm
-            } else if(gamepad2.a){              //Test Powers!!!!
+            } else if (gamepad2.a) {              //Test Powers!!!!
                 robot.launchpad.shoot(0.75);
-            }  else if(gamepad2.b){              //Test Powers!!!!
+            } else if (gamepad2.b) {              //Test Powers!!!!
                 robot.launchpad.shoot(0.5);
-            }  else if(gamepad2.x){              //Test Powers!!!!
+            } else if (gamepad2.x) {              //Test Powers!!!!
                 robot.launchpad.shoot(0.60);
-            }  else if(gamepad2.y){              //Test Powers!!!!
+            } else if (gamepad2.y) {              //Test Powers!!!!
                 robot.launchpad.shoot(0.9);
-            } else{
+            } else {
                 robot.launchpad.shoot(0);
             }
 
             //Conveyor
-            if (gamepad2.right_trigger >= 0.25){
+            if (gamepad2.right_trigger >= 0.25) {
                 robot.launchpad.setConveyor(1.0);
-            } else if (gamepad2.right_bumper){
+            } else if (gamepad2.right_bumper) {
                 robot.launchpad.setConveyor(-1.0);
-            } else{
+            } else {
                 robot.launchpad.setConveyor(0);
             }
+
+            telemetry.addData("FL Speed", frontLeft);
+            telemetry.addData("FR Speed", frontRight);
+            telemetry.addData("BL Speed", backLeft);
+            telemetry.addData("BR Speed", backRight);
+            telemetry.update();
         }
 
     }

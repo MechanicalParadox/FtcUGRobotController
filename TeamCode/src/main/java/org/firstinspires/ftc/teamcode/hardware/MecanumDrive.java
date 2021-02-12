@@ -65,6 +65,56 @@ public class MecanumDrive extends InitialPosCalcs {
         backR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
+// Teleop drive
+    public void moveBy(float LeftX, float LeftY, float RightX){
+        //Deadzones
+        if(Math.abs(LeftX) <= 0.05){
+            LeftX = 0;
+        }
+        if(Math.abs(LeftY) <= 0.05){
+            LeftY = 0;
+        }
+        if(Math.abs(RightX) <= 0.05){
+            RightX = 0;
+        }
+
+        // Calculates direction each word should turn(range -3 to 3)
+        double frontLeft = LeftY + LeftX + RightX;
+        double frontRight = LeftY - LeftX - RightX;
+        double backLeft = LeftY - LeftX + RightX;
+        double backRight = LeftY + LeftX - RightX;
+
+        // Calculates the motor which requires the most power
+        double largestVariable = Math.abs(frontLeft);
+
+        if (largestVariable < Math.abs(frontRight))
+            largestVariable = Math.abs(frontRight);
+
+        if (largestVariable < Math.abs(backLeft))
+            largestVariable = Math.abs(backLeft);
+
+        if (largestVariable < Math.abs(backRight))
+            largestVariable = Math.abs(backRight);
+
+        // Sets range from -1 to 1
+        frontLeft /= largestVariable;
+        frontRight /= largestVariable;
+        backLeft /= largestVariable;
+        backRight /= largestVariable;
+
+      /*  if (gamepad1.left_trigger > 0){
+            frontLeft /= 4;
+            frontRight /= 4;
+            backLeft /= 4;
+            backRight /= 4;
+        }*/
+
+        // Sets motor powers
+        frontL.setPower(-frontLeft);
+        frontR.setPower(frontRight);
+        backL.setPower(-backLeft);
+        backR.setPower(backRight);
+    }
 //determine encoder changes
     public double getRawLeftPosition() {
         return frontL.getCurrentPosition();
