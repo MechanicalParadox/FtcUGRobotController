@@ -69,11 +69,14 @@ public class Comp1Tele extends LinearOpMode {
             backLeft /= largestVariable;
             backRight /= largestVariable;
 
-            if (gamepad1.a) {
-                frontLeft /= 4;
-                frontRight /= 4;
-                backLeft /= 4;
-                backRight /= 4;
+            //Scaling Slowspeed
+            double slowBy = 1;
+            if (gamepad1.left_trigger >= 0.25) {
+                slowBy = 1/gamepad1.left_trigger;
+                frontLeft /= slowBy;
+                frontRight /= slowBy;
+                backLeft /= slowBy;
+                backRight /= slowBy;
             }
 
             // Sets motor powers
@@ -83,18 +86,18 @@ public class Comp1Tele extends LinearOpMode {
             robot.mecanumDrive.backR.setPower(backRight);
 
             // Intakes
-            if (gamepad1.left_bumper == true) {
-                robot.intake.intakeFront(0.75);
+            if (gamepad1.right_bumper == true) {
+                robot.intake.intakeFront(0.90);
             } else if (gamepad1.right_trigger >= 0.25) {
-                robot.intake.intakeFront(-0.75);
+                robot.intake.intakeFront(-0.90);
             } else {
                 robot.intake.intakeFront(0);
             }
 
-            if (gamepad1.right_bumper == true) {
-                robot.intake.intakeBack(0.75);
+            if (gamepad1.left_bumper == true) {
+                robot.intake.intakeBack(0.90);
             } else if (gamepad1.right_trigger >= 0.25) {
-                robot.intake.intakeBack(-0.75);
+                robot.intake.intakeBack(-0.90);
             } else {
                 robot.intake.intakeBack(0);
             }
