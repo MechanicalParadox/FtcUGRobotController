@@ -24,7 +24,7 @@ public class LeftPosFrameGrabber extends OpenCvPipeline {
     //public double rightGuide = 320;
     public double mask = 0; // Need to confirm
     public double mask2 = 0;
-    public double threshold = 90; // was 82
+    public double threshold = 90.00; // was 82
     public String position = "";
     public double rectWidth = 0.0;
     public double rectHeight = 0.0;
@@ -175,15 +175,15 @@ public class LeftPosFrameGrabber extends OpenCvPipeline {
         rectWidth = width;
         rectHeight = height;
         // Because we are detecting yellow, we know that if the smallest x value is in the middle, the black skystone must be in the center
-        if((x) > leftGuide){ //Still need to determine left guide
-            position = "RIGHT";
-            return "RIGHT";
-        } else if(width > 150.0){ //Still need to determine the approximate width of two stones
-            position = "MIDDLE";
-            return "MIDDLE";
+        if(rectHeight > 60){ //Still need to determine left guide
+            position = "C";
+            return "C";
+        } else if(rectHeight > 35.0){ //Still need to determine the approximate width of two stones
+            position = "B";
+            return "B";
         } else{
-            position = "LEFT";
-            return "LEFT";
+            position = "A";
+            return "A";
         }
     }
 

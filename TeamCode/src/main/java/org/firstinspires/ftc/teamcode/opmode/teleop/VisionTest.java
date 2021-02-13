@@ -43,7 +43,7 @@ public class VisionTest extends LinearOpMode{
             }
         });
 
-        while (!isStarted()) { // 4 stack W: 90. H: 30.  1 stack: W: 92.  H: 37
+        while (!isStarted()) { // 1 stack W: 96. H: 42.  4 stack: W: 105.  H: 84
 
             // Left Guide
             if (gamepad1.dpad_right == true) {
@@ -60,12 +60,13 @@ public class VisionTest extends LinearOpMode{
             }
 
             // Threshold
-            if (gamepad2.y == true) {
+            if (gamepad2.x == true) {
                 leftPosFrameGrabber.threshold += 0.01; // was 0.001
-            } else if (gamepad2.a == true) {
+            } else if (gamepad2.b == true) {
                 leftPosFrameGrabber.threshold -= 0.01;
             }
 
+            telemetry.addData("Position", leftPosFrameGrabber.position);
             telemetry.addData("Threshold", leftPosFrameGrabber.threshold);
             telemetry.addData("Rect width", leftPosFrameGrabber.rectWidth);
             telemetry.addData("Rect height", leftPosFrameGrabber.rectHeight);
@@ -76,7 +77,7 @@ public class VisionTest extends LinearOpMode{
         waitForStart();
 
         while(opModeIsActive()){
-            //telemetry.addData("Position", position);
+            telemetry.addData("Position", position);
             telemetry.addData("Threshold", leftPosFrameGrabber.threshold);
         }
     }
