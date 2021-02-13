@@ -24,7 +24,7 @@ public class LeftPosFrameGrabber extends OpenCvPipeline {
     //public double rightGuide = 320;
     public double mask = 0; // Need to confirm
     public double mask2 = 0;
-    public double threshold = 82;
+    public double threshold = 90; // was 82
     public String position = "";
     public double rectWidth = 0.0;
     public double rectHeight = 0.0;
