@@ -76,7 +76,7 @@ public class RedInnerComp1 extends LinearOpMode {
             telemetry.addData("Rect width", leftPosFrameGrabber.rectWidth);
             telemetry.addData("Rect height", leftPosFrameGrabber.rectHeight);
 
-            telemetry.update();
+            telemetry.update();//Stop Breaking
         }
 
         waitForStart();
