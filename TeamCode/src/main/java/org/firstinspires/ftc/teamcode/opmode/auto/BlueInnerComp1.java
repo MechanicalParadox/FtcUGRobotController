@@ -150,7 +150,7 @@ public class BlueInnerComp1 extends LinearOpMode {
         //If Pos C, try and intake and shoot in high goal
         if(leftPosFrameGrabber.position != "A"){
             //move left and hit 1st power shot
-            while (opModeIsActive() && robot.mecanumDrive.getCenterPosition() > -12) {//22 too far
+            while (opModeIsActive() && robot.mecanumDrive.getCenterPosition() > -8) {//22 too far
                 if (robot.mecanumDrive.getCenterPosition() > 16) {
                     driveSideways(0.5);
                 } else {
