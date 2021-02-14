@@ -125,7 +125,7 @@ public class BlueInnerComp1 extends LinearOpMode {
         robot.launchpad.shoot(0.9);
         delay(1);
         robot.launchpad.setConveyor(1.0);
-        delay(1);
+        delay(0.5);
         //robot.launchpad.setConveyor(0.0);
 
         //Second Power Shot
