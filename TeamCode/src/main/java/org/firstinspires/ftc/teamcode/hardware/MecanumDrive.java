@@ -131,15 +131,15 @@ public class MecanumDrive extends InitialPosCalcs {
 //determine position in cm
     //Distances in inches currently to check distance.  will change to cm when implementing
     public double getLeftPosition() {
-    return ((Math.PI * 2.83) / 1440 * frontL.getCurrentPosition());
+    return (-(Math.PI * 2.83) / 1440 * frontL.getCurrentPosition());
     }
 
     public double getCenterPosition() {
-        return (((Math.PI * 2.83) / 1440) * backL.getCurrentPosition());
+        return (-((Math.PI * 2.83) / 1440) * backL.getCurrentPosition());
     }
 
     public double getRightPosition() {
-        return (-(Math.PI * 2.83) / 1440 * frontR.getCurrentPosition());
+        return ((Math.PI * 2.83) / 1440 * frontR.getCurrentPosition());
     }
 
     public Pos2d getPosition() {
