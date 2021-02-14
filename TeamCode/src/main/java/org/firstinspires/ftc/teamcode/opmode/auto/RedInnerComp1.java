@@ -110,11 +110,11 @@ public class RedInnerComp1 extends LinearOpMode {
             //delay(2);
 
             //move left and hit 1st power shot
-            while (opModeIsActive() && robot.mecanumDrive.getCenterPosition() > -6 && robot.mecanumDrive.getRightPosition() > -6) {
-                if (robot.mecanumDrive.getCenterPosition() < 3) {
-                    driveSideways(0.25);
-                } else {
+            while (opModeIsActive() && robot.mecanumDrive.getCenterPosition() > -8 && robot.mecanumDrive.getRightPosition() > -8) {
+                if (robot.mecanumDrive.getCenterPosition() < -4) {
                     driveSideways(0.5);
+                } else {
+                    driveSideways(0.75);
                 }
                 telemetry.addData("leftEncoder", robot.mecanumDrive.getLeftPosition());
                 telemetry.addData("rightEncoder", robot.mecanumDrive.getRightPosition());
@@ -127,7 +127,7 @@ public class RedInnerComp1 extends LinearOpMode {
             robot.launchpad.shoot(0.9);
             delay(0.25);
             robot.launchpad.setConveyor(1);
-            delay(0.25);
+            delay(1);
             robot.launchpad.setConveyor(0);
 
             //Second Power Shot
@@ -263,7 +263,7 @@ public class RedInnerComp1 extends LinearOpMode {
         delay(2);
 
       */
-
+/*
 //POSITION C(starter stack of 4) ///////////////////////////////////////////////////////////////////////////////////////////////
         //move forward to place wobble grabber
         while(opModeIsActive() && robot.mecanumDrive.getLeftPosition() < 120 && robot.mecanumDrive.getRightPosition() < 120){
@@ -343,7 +343,7 @@ public class RedInnerComp1 extends LinearOpMode {
             telemetry.update();
         }
         driveForward(0);
-
+*/
         while(opModeIsActive()){
             telemetry.addData("leftEncoder", robot.mecanumDrive.getLeftPosition());
             telemetry.addData("rightEncoder", robot.mecanumDrive.getRightPosition());
