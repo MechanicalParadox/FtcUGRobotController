@@ -203,6 +203,11 @@ public class BlueInnerComp1 extends LinearOpMode {
             driveForward(0);
             delay(1);*/
 
+            while (opModeIsActive() && robot.mecanumDrive.getLeftPosition() > robot.mecanumDrive.getRightPosition()){
+                turnLeft(-0.25);
+            }
+            turnLeft(0);
+            delay(0.2);
             while (opModeIsActive() && robot.mecanumDrive.getCenterPosition() < -4) {//22 too far
                 driveSideways(0.5);
 
@@ -442,5 +447,12 @@ public class BlueInnerComp1 extends LinearOpMode {
         robot.mecanumDrive.backR.setPower(power);
         robot.mecanumDrive.frontL.setPower(-power);
         robot.mecanumDrive.backL.setPower(power);
+    }
+
+    public void turnLeft(double power){
+        robot.mecanumDrive.frontR.setPower(-power);
+        robot.mecanumDrive.backR.setPower(-power);
+        robot.mecanumDrive.frontL.setPower(-power);
+        robot.mecanumDrive.backL.setPower(-power);
     }
 }
