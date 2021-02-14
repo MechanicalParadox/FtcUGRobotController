@@ -359,16 +359,16 @@ public class RedInnerComp1 extends LinearOpMode {
     }
 
     public void driveForward(double power){
-        robot.mecanumDrive.frontR.setPower(power);
-        robot.mecanumDrive.backR.setPower(power);
-        robot.mecanumDrive.frontL.setPower(-power);
-        robot.mecanumDrive.backL.setPower(-power);
+        robot.mecanumDrive.frontR.setPower(-power);
+        robot.mecanumDrive.backR.setPower(-power);
+        robot.mecanumDrive.frontL.setPower(power);
+        robot.mecanumDrive.backL.setPower(power);
     }
     public void driveSideways(double power){
         //treat left as positive
-        robot.mecanumDrive.frontR.setPower(power);
-        robot.mecanumDrive.backR.setPower(-power);
-        robot.mecanumDrive.frontL.setPower(power);
-        robot.mecanumDrive.backL.setPower(-power);
+        robot.mecanumDrive.frontR.setPower(-power);
+        robot.mecanumDrive.backR.setPower(power);
+        robot.mecanumDrive.frontL.setPower(-power);
+        robot.mecanumDrive.backL.setPower(power);
     }
 }
