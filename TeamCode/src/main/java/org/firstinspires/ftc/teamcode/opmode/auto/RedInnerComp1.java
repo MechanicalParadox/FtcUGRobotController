@@ -110,7 +110,7 @@ public class RedInnerComp1 extends LinearOpMode {
             //delay(2);
 
             //move left and hit 1st power shot
-            while (opModeIsActive() && robot.mecanumDrive.getCenterPosition() > -22) {
+            while (opModeIsActive() && robot.mecanumDrive.getCenterPosition() > -20) {//22 too far
                 if (robot.mecanumDrive.getCenterPosition() < -4) {
                     driveSideways(0.25);
                 } else {
@@ -131,8 +131,8 @@ public class RedInnerComp1 extends LinearOpMode {
             //robot.launchpad.setConveyor(0.0);
 
             //Second Power Shot
-            while (opModeIsActive() && robot.mecanumDrive.getCenterPosition() > -32) {
-                driveSideways(0.25);
+            while (opModeIsActive() && robot.mecanumDrive.getCenterPosition() > -32) {//35 too far
+                driveSideways(0.35);
 
                 telemetry.addData("leftEncoder", robot.mecanumDrive.getLeftPosition());
                 telemetry.addData("rightEncoder", robot.mecanumDrive.getRightPosition());
