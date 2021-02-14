@@ -7,13 +7,12 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.hardware.FullRobot;
 import org.firstinspires.ftc.teamcode.hardware.vision.LeftPosFrameGrabber;
-import org.firstinspires.ftc.teamcode.opmode.teleop.VisionTest;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-@Autonomous(name = "RedComp1", group = "Tests")
-public class RedInnerComp1 extends LinearOpMode {
+@Autonomous(name = "BlueComp1", group = "Tests")
+public class BlueInnerComp1 extends LinearOpMode {
     //Vision Variables
     OpenCvCamera webCam;
     private LeftPosFrameGrabber leftPosFrameGrabber;
@@ -108,11 +107,11 @@ public class RedInnerComp1 extends LinearOpMode {
             //delay(2);
 
             //move left and hit 1st power shot
-            while (opModeIsActive() && robot.mecanumDrive.getCenterPosition() > -21) {//22 too far
+            while (opModeIsActive() && robot.mecanumDrive.getCenterPosition() < 18) {//22 too far
                 if (robot.mecanumDrive.getCenterPosition() < -4) {
-                    driveSideways(0.25);
+                    driveSideways(-0.25);
                 } else {
-                    driveSideways(0.5);
+                    driveSideways(-0.5);
                 }
                 telemetry.addData("leftEncoder", robot.mecanumDrive.getLeftPosition());
                 telemetry.addData("rightEncoder", robot.mecanumDrive.getRightPosition());
@@ -129,8 +128,8 @@ public class RedInnerComp1 extends LinearOpMode {
             //robot.launchpad.setConveyor(0.0);
 
             //Second Power Shot
-            while (opModeIsActive() && robot.mecanumDrive.getCenterPosition() > -32) {//35 too far
-                driveSideways(0.43);
+            while (opModeIsActive() && robot.mecanumDrive.getCenterPosition() < 32) {//35 too far
+                driveSideways(-0.43);
 
                 telemetry.addData("leftEncoder", robot.mecanumDrive.getLeftPosition());
                 telemetry.addData("rightEncoder", robot.mecanumDrive.getRightPosition());
@@ -147,11 +146,11 @@ public class RedInnerComp1 extends LinearOpMode {
 
             delay(1);
 
-            //If Pos C, try and intake and shoot in high goal
+        //If Pos C, try and intake and shoot in high goal
         if(leftPosFrameGrabber.position != "A"){
             //move left and hit 1st power shot
-            while (opModeIsActive() && robot.mecanumDrive.getCenterPosition() < 12) {//22 too far
-                if (robot.mecanumDrive.getCenterPosition() < 6) {
+            while (opModeIsActive() && robot.mecanumDrive.getCenterPosition() > -12) {//22 too far
+                if (robot.mecanumDrive.getCenterPosition() > 16) {
                     driveSideways(0.5);
                 } else {
                     driveSideways(0.75);
@@ -208,9 +207,33 @@ public class RedInnerComp1 extends LinearOpMode {
             robot.launchpad.setConveyor(1.0);
             delay(3);
         }
-        //move forward to prepare to score power shots
-        while (opModeIsActive() && robot.mecanumDrive.getLeftPosition() < 72 && robot.mecanumDrive.getRightPosition() < 72) {
-            if (robot.mecanumDrive.getLeftPosition() > 66) {
+            //move forward to prepare to score power shots
+            while (opModeIsActive() && robot.mecanumDrive.getLeftPosition() < 72 && robot.mecanumDrive.getRightPosition() < 72) {
+                if (robot.mecanumDrive.getLeftPosition() > 66) {
+                    driveForward(0.5);
+                } else {
+                    driveForward(0.75);
+
+                }
+                telemetry.addData("leftEncoder", robot.mecanumDrive.getLeftPosition());
+                telemetry.addData("rightEncoder", robot.mecanumDrive.getRightPosition());
+                telemetry.addData("centerEncoder", robot.mecanumDrive.getCenterPosition());
+                telemetry.update();
+            }
+            driveForward(0);
+
+            //Third Power Shot
+
+
+//POSITION B(starter stack of 1) ///////////////////////////////////////////////////////////////////////////////////////////////
+        //move forward to place wobble grabber
+/*
+        while(opModeIsActive() && robot.mecanumDrive.getLeftPosition() < 50 && robot.mecanumDrive.getRightPosition() < 50){
+            if(robot.mecanumDrive.getLeftPosition() > 42){
+                driveForward(0.1);
+            } else if (robot.mecanumDrive.getLeftPosition() > 35) {
+                driveForward(0.25);
+            } else if (robot.mecanumDrive.getLeftPosition() > 25){
                 driveForward(0.5);
             } else {
                 driveForward(0.75);
@@ -222,7 +245,164 @@ public class RedInnerComp1 extends LinearOpMode {
             telemetry.update();
         }
         driveForward(0);
+        delay(0.25);
 
+        while(opModeIsActive() && robot.mecanumDrive.getCenterPosition() > -12){
+            if (robot.mecanumDrive.getCenterPosition() > 6){
+                driveSideways(0.25);
+            } else {
+                driveSideways(0.5);
+
+            }
+            telemetry.addData("leftEncoder", robot.mecanumDrive.getLeftPosition());
+            telemetry.addData("rightEncoder", robot.mecanumDrive.getRightPosition());
+            telemetry.addData("centerEncoder", robot.mecanumDrive.getCenterPosition());
+            telemetry.update();
+        }
+        driveForward(0);
+        delay(2);
+
+        //SHOOT RINGS PLACEHOLDER
+
+        while(opModeIsActive() && robot.mecanumDrive.getCenterPosition() > -26){
+            if (robot.mecanumDrive.getCenterPosition() < -18){
+                driveSideways(0.25);
+            } else {
+                driveSideways(0.5);
+
+            }
+            telemetry.addData("leftEncoder", robot.mecanumDrive.getLeftPosition());
+            telemetry.addData("rightEncoder", robot.mecanumDrive.getRightPosition());
+            telemetry.addData("centerEncoder", robot.mecanumDrive.getCenterPosition());
+            telemetry.update();
+        }
+        driveForward(0);
+        delay(2);
+
+        while(opModeIsActive() && robot.mecanumDrive.getLeftPosition() < 96 && robot.mecanumDrive.getRightPosition() < 96){
+            if(robot.mecanumDrive.getLeftPosition() > 92){
+                driveForward(0.1);
+            } else if (robot.mecanumDrive.getLeftPosition() > 86) {
+                driveForward(0.25);
+            } else if (robot.mecanumDrive.getLeftPosition() > 74){
+                driveForward(0.5);
+            } else {
+                driveForward(0.75);
+
+            }
+            telemetry.addData("leftEncoder", robot.mecanumDrive.getLeftPosition());
+            telemetry.addData("rightEncoder", robot.mecanumDrive.getRightPosition());
+            telemetry.addData("centerEncoder", robot.mecanumDrive.getCenterPosition());
+            telemetry.update();
+        }
+        driveForward(0);
+        delay(0.25);
+        //RELEASE WOBBLER PLACEHOLDER
+        delay(2);
+
+        //Drive back and park
+        while(opModeIsActive() && robot.mecanumDrive.getLeftPosition() > 60 && robot.mecanumDrive.getRightPosition() > 60){
+            if(robot.mecanumDrive.getLeftPosition() < 63.5){
+                driveForward(-0.1);
+            } else if (robot.mecanumDrive.getLeftPosition() < 67.5) {
+                driveForward(-0.25);
+            } else if (robot.mecanumDrive.getLeftPosition() < 75){
+                driveForward(-0.5);
+            } else {
+                driveForward(-0.75);
+
+            }
+            telemetry.addData("leftEncoder", robot.mecanumDrive.getLeftPosition());
+            telemetry.addData("rightEncoder", robot.mecanumDrive.getRightPosition());
+            telemetry.addData("centerEncoder", robot.mecanumDrive.getCenterPosition());
+            telemetry.update();
+        }
+
+        driveForward(0);
+        delay(2);
+
+      */
+/*
+//POSITION C(starter stack of 4) ///////////////////////////////////////////////////////////////////////////////////////////////
+        //move forward to place wobble grabber
+        while(opModeIsActive() && robot.mecanumDrive.getLeftPosition() < 120 && robot.mecanumDrive.getRightPosition() < 120){
+            if(robot.mecanumDrive.getLeftPosition() > 110){
+                driveForward(0.1);
+            } else if (robot.mecanumDrive.getLeftPosition() > 90) {
+                driveForward(0.25);
+            } else if (robot.mecanumDrive.getLeftPosition() > 75){
+                driveForward(0.5);
+            } else {
+                driveForward(0.75);
+
+            }
+            telemetry.addData("leftEncoder", robot.mecanumDrive.getLeftPosition());
+            telemetry.addData("rightEncoder", robot.mecanumDrive.getRightPosition());
+            telemetry.addData("centerEncoder", robot.mecanumDrive.getCenterPosition());
+            telemetry.update();
+        }
+        driveForward(0);
+        delay(0.25);
+        //RELEASE WOBBLER PLACEHOLDER
+        delay(2);
+
+        //go back and score rings
+        while(opModeIsActive() && robot.mecanumDrive.getLeftPosition() > 45 && robot.mecanumDrive.getRightPosition() > 45){
+            if(robot.mecanumDrive.getLeftPosition() < 47.5){
+                driveForward(-0.1);
+            } else if (robot.mecanumDrive.getLeftPosition() < 52.5) {
+                driveForward(-0.25);
+            } else if (robot.mecanumDrive.getLeftPosition() < 57.5){
+                driveForward(-0.5);
+            } else {
+                driveForward(-0.75);
+
+            }
+            telemetry.addData("leftEncoder", robot.mecanumDrive.getLeftPosition());
+            telemetry.addData("rightEncoder", robot.mecanumDrive.getRightPosition());
+            telemetry.addData("centerEncoder", robot.mecanumDrive.getCenterPosition());
+            telemetry.update();
+        }
+
+        driveForward(0);
+        delay(2);
+        while(opModeIsActive() && robot.mecanumDrive.getCenterPosition() > -20){
+            if (robot.mecanumDrive.getCenterPosition() < -10){
+                driveSideways(0.25);
+            } else {
+                driveSideways(0.5);
+
+            }
+            telemetry.addData("leftEncoder", robot.mecanumDrive.getLeftPosition());
+            telemetry.addData("rightEncoder", robot.mecanumDrive.getRightPosition());
+            telemetry.addData("centerEncoder", robot.mecanumDrive.getCenterPosition());
+            telemetry.update();
+        }
+
+        driveSideways(0);
+        delay(1);
+        //SHOOT RINGS PLACEHOLDER
+
+        delay(1);
+
+        while(opModeIsActive() && robot.mecanumDrive.getLeftPosition() < 60 && robot.mecanumDrive.getRightPosition() < 60){
+            if(robot.mecanumDrive.getLeftPosition() > 55){
+                driveForward(0.1);
+            } else if (robot.mecanumDrive.getLeftPosition() > 45) {
+                driveForward(0.25);
+            } else if (robot.mecanumDrive.getLeftPosition() > 30){
+                driveForward(0.5);
+            } else {
+                driveForward(0.75);
+
+            }
+            telemetry.addData("leftEncoder", robot.mecanumDrive.getLeftPosition());
+            telemetry.addData("rightEncoder", robot.mecanumDrive.getRightPosition());
+            telemetry.addData("centerEncoder", robot.mecanumDrive.getCenterPosition());
+            telemetry.update();
+        }
+        driveForward(0);
+*/
         while(opModeIsActive()){
             telemetry.addData("leftEncoder", robot.mecanumDrive.getLeftPosition());
             telemetry.addData("rightEncoder", robot.mecanumDrive.getRightPosition());
