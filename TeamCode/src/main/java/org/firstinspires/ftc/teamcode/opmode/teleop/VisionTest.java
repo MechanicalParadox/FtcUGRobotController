@@ -17,9 +17,9 @@ public class VisionTest extends LinearOpMode{
     private LeftPosFrameGrabber leftPosFrameGrabber;
 
     private enum POSITION {
-        LEFT,
-        CENTER,
-        RIGHT,
+        A,
+        B,
+        C,
     }
 
     POSITION position;
@@ -66,6 +66,7 @@ public class VisionTest extends LinearOpMode{
                 leftPosFrameGrabber.threshold -= 0.01;
             }
 
+            telemetry.addData("Position", leftPosFrameGrabber.position);
             telemetry.addData("Position", leftPosFrameGrabber.position);
             telemetry.addData("Threshold", leftPosFrameGrabber.threshold);
             telemetry.addData("Rect width", leftPosFrameGrabber.rectWidth);
