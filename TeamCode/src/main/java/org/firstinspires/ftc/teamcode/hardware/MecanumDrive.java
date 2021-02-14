@@ -139,7 +139,7 @@ public class MecanumDrive extends InitialPosCalcs {
     }
 
     public double getRightPosition() {
-        return ((Math.PI * 2.83) / 1440 * frontR.getCurrentPosition());
+        return (-(Math.PI * 2.83) / 1440 * frontR.getCurrentPosition());
     }
 
     public Pos2d getPosition() {
