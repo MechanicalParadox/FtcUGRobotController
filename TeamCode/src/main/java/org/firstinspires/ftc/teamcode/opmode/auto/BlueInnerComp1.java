@@ -86,7 +86,7 @@ public class BlueInnerComp1 extends LinearOpMode {
         delay(1);
 
         //move left and hit 1st power shot
-        while (opModeIsActive() && robot.mecanumDrive.getCenterPosition() < 18) {//22 too far
+        while (opModeIsActive() && robot.mecanumDrive.getCenterPosition() < 6) {//22 too far
             if (robot.mecanumDrive.getCenterPosition() < -4) {
                 driveSideways(-0.25);
             } else {
