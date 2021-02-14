@@ -164,7 +164,7 @@ public class BlueInnerComp1 extends LinearOpMode {
             driveForward(0);
             delay(0.5);
 
-            robot.intake.intakeBack(1);
+            robot.intake.intakeBack(-1);
             delay(0.2);
 
             while (opModeIsActive() && robot.mecanumDrive.getLeftPosition() > 36 && robot.mecanumDrive.getRightPosition() > 36) {
@@ -182,9 +182,9 @@ public class BlueInnerComp1 extends LinearOpMode {
                 telemetry.update();
             }
             driveForward(0);
-            delay(0.2);
+            delay(1);
 
-            while (opModeIsActive() && robot.mecanumDrive.getLeftPosition() < 60 && robot.mecanumDrive.getRightPosition() < 60) {
+            while (opModeIsActive() && robot.mecanumDrive.getLeftPosition() < 55 && robot.mecanumDrive.getRightPosition() < 55) {
                 if (robot.mecanumDrive.getLeftPosition() > 59) {
                     driveForward(0.1);
                 } else if (robot.mecanumDrive.getLeftPosition() > 58) {
@@ -201,6 +201,18 @@ public class BlueInnerComp1 extends LinearOpMode {
                 telemetry.update();
             }
             driveForward(0);
+            delay(1);
+
+            while (opModeIsActive() && robot.mecanumDrive.getCenterPosition() < -4) {//22 too far
+                driveSideways(0.5);
+
+                telemetry.addData("leftEncoder", robot.mecanumDrive.getLeftPosition());
+                telemetry.addData("rightEncoder", robot.mecanumDrive.getRightPosition());
+                telemetry.addData("centerEncoder", robot.mecanumDrive.getCenterPosition());
+                telemetry.update();
+            }
+            driveForward(0);
+            delay(0.5);
             robot.intake.intakeBack(0);
 
             robot.launchpad.shoot(1.0);
