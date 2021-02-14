@@ -184,7 +184,7 @@ public class BlueInnerComp1 extends LinearOpMode {
             driveForward(0);
             delay(1);
 
-            while (opModeIsActive() && robot.mecanumDrive.getLeftPosition() < 55 && robot.mecanumDrive.getRightPosition() < 55) {
+            /*while (opModeIsActive() && robot.mecanumDrive.getLeftPosition() < 55 && robot.mecanumDrive.getRightPosition() < 55) {
                 if (robot.mecanumDrive.getLeftPosition() > 59) {
                     driveForward(0.1);
                 } else if (robot.mecanumDrive.getLeftPosition() > 58) {
@@ -201,7 +201,7 @@ public class BlueInnerComp1 extends LinearOpMode {
                 telemetry.update();
             }
             driveForward(0);
-            delay(1);
+            delay(1);*/
 
             while (opModeIsActive() && robot.mecanumDrive.getCenterPosition() < -4) {//22 too far
                 driveSideways(0.5);
@@ -212,7 +212,7 @@ public class BlueInnerComp1 extends LinearOpMode {
                 telemetry.update();
             }
             driveForward(0);
-            delay(0.5);
+            delay(1);
             robot.intake.intakeBack(0);
 
             robot.launchpad.shoot(1.0);
