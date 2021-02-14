@@ -29,5 +29,26 @@ public class Launchpad {
         conveyor.setPower(power);
     }
 
+    /*public double fLastEncoder = 0;
+    public void velocityShot()
+    {
+        public double fVelocityTime = System.nanoTime();
+        public double fEncoder = flywheel.getCurrentPosition();
+        public double fVelocity = (double)(fEncoder - fLastEncoder) / (fVelocityTime - fLastVelocityTime);
+
+        if(fVelocity >= (fTarget + tolerance))
+        {
+            setFPower(0.8);
+        }
+
+        else if(fVelocity < (fTarget - tolerance))
+        {
+            setFPower(0.8);
+        }
+
+        fLastEncoder = fEncoder;
+        fLastVelocityTime = fVelocityTime;
+    }*/
+
 
 }
