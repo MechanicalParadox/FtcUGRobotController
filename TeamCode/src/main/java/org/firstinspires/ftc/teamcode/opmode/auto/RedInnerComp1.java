@@ -218,7 +218,7 @@ public class RedInnerComp1 extends LinearOpMode {
                 telemetry.update();
             }
             driveForward(0);
-            delay(1);
+            delay(3);
             robot.intake.intakeBack(0);
 
             robot.launchpad.shoot(1.0);
