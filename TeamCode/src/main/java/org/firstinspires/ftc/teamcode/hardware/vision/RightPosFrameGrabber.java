@@ -24,7 +24,7 @@ public class RightPosFrameGrabber extends OpenCvPipeline {
     //public double rightGuide = 320;
     public double mask = 0; // Need to confirm
     public double mask2 = 0;
-    public double threshold = 90.00; // was 82 - may try to lower??
+    public double threshold = 120.00; // was 82 - may try to lower??
     public String position = "";
     public double rectWidth = 0.0;
     public double rectHeight = 0.0;
@@ -190,7 +190,7 @@ public class RightPosFrameGrabber extends OpenCvPipeline {
 
 
     public String calcAlignRight() {
-        position = "RIGHT";
-        return "RIGHT";
+        position = "A";
+        return "A";
     }
 }

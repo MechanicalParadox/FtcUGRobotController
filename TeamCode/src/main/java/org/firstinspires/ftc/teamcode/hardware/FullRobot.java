@@ -20,5 +20,6 @@ public class FullRobot {
         mecanumDrive = new MecanumDrive(this, map, telemetry, OpMode);
         intake = new IntakeTransition(this, map, OpMode);
         launchpad = new Launchpad(this, map, OpMode);
+
     }
 }

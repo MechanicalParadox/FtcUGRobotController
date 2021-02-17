@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.hardware.FullRobot;
-import org.firstinspires.ftc.teamcode.hardware.vision.LeftPosFrameGrabber;
+import org.firstinspires.ftc.teamcode.hardware.vision.RightPosFrameGrabber;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -15,7 +15,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 public class BlueInnerComp1 extends LinearOpMode {
     //Vision Variables
     OpenCvCamera webCam;
-    private LeftPosFrameGrabber leftPosFrameGrabber;
+    private RightPosFrameGrabber RightPosFrameGrabber;
     /*private enum POSITION {
         A,
         B,
@@ -36,8 +36,8 @@ public class BlueInnerComp1 extends LinearOpMode {
         webCam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
 
         //Specify Image processing pipeline
-        leftPosFrameGrabber = new LeftPosFrameGrabber();
-        webCam.setPipeline(leftPosFrameGrabber);
+        RightPosFrameGrabber = new RightPosFrameGrabber();
+        webCam.setPipeline(RightPosFrameGrabber);
         // start the vision system
         webCam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
@@ -50,30 +50,30 @@ public class BlueInnerComp1 extends LinearOpMode {
 
             // Left Guide
             if (gamepad1.dpad_right == true) {
-                leftPosFrameGrabber.leftGuide += 0.001;
+                RightPosFrameGrabber.leftGuide += 0.001;
             } else if (gamepad1.dpad_left == true) {
-                leftPosFrameGrabber.leftGuide -= 0.001;
+                RightPosFrameGrabber.leftGuide -= 0.001;
             }
 
             // Mask
             if (gamepad1.dpad_down == true) {
-                leftPosFrameGrabber.mask += 0.001;
+                RightPosFrameGrabber.mask += 0.001;
             } else if (gamepad1.dpad_up == true) {
-                leftPosFrameGrabber.mask -= 0.001;
+                RightPosFrameGrabber.mask -= 0.001;
             }
 
             // Threshold
             if (gamepad2.x == true) {
-                leftPosFrameGrabber.threshold += 0.01; // was 0.001
+                RightPosFrameGrabber.threshold += 0.001; // was 0.001
             } else if (gamepad2.b == true) {
-                leftPosFrameGrabber.threshold -= 0.01;
+                RightPosFrameGrabber.threshold -= 0.001;
             }
 
-            telemetry.addData("Position", leftPosFrameGrabber.position);
-            telemetry.addData("Position", leftPosFrameGrabber.position);
-            telemetry.addData("Threshold", leftPosFrameGrabber.threshold);
-            telemetry.addData("Rect width", leftPosFrameGrabber.rectWidth);
-            telemetry.addData("Rect height", leftPosFrameGrabber.rectHeight);
+            telemetry.addData("Position", RightPosFrameGrabber.position);
+            telemetry.addData("Position", RightPosFrameGrabber.position);
+            telemetry.addData("Threshold", RightPosFrameGrabber.threshold);
+            telemetry.addData("Rect width", RightPosFrameGrabber.rectWidth);
+            telemetry.addData("Rect height", RightPosFrameGrabber.rectHeight);
 
             telemetry.update();//Stop Breaking
         }
@@ -148,7 +148,7 @@ public class BlueInnerComp1 extends LinearOpMode {
         delay(1);
 
         //If Pos C, try and intake and shoot in high goal
-        if(leftPosFrameGrabber.position != "A"){
+        //if(leftPosFrameGrabber.position != "A"){
             //move left and hit 1st power shot
             while (opModeIsActive() && robot.mecanumDrive.getCenterPosition() > -8) {//22 too far
                 if (robot.mecanumDrive.getCenterPosition() > 16) {
@@ -168,14 +168,7 @@ public class BlueInnerComp1 extends LinearOpMode {
             delay(0.2);
 
             while (opModeIsActive() && robot.mecanumDrive.getLeftPosition() > 36 && robot.mecanumDrive.getRightPosition() > 36) {
-                if (robot.mecanumDrive.getLeftPosition() > 40) {
-                    driveForward(-0.25);
-                } else if (robot.mecanumDrive.getLeftPosition() < 44) {
-                    driveForward(-0.5);
-                } else {
-                    driveForward(-0.75);
-
-                }
+                driveForward(-0.5);
                 telemetry.addData("leftEncoder", robot.mecanumDrive.getLeftPosition());
                 telemetry.addData("rightEncoder", robot.mecanumDrive.getRightPosition());
                 telemetry.addData("centerEncoder", robot.mecanumDrive.getCenterPosition());
@@ -223,7 +216,7 @@ public class BlueInnerComp1 extends LinearOpMode {
             robot.intake.intakeBack(0);
             robot.launchpad.setConveyor(1.0);
             delay(3);
-        }
+       //}
         //move forward to prepare to score power shots
         while (opModeIsActive() && robot.mecanumDrive.getLeftPosition() < 72 && robot.mecanumDrive.getRightPosition() < 72) {
             if (robot.mecanumDrive.getLeftPosition() > 66) {
@@ -435,23 +428,24 @@ public class BlueInnerComp1 extends LinearOpMode {
     }
 
     public void driveForward(double power){
-        robot.mecanumDrive.frontR.setPower(-power);
-        robot.mecanumDrive.backR.setPower(-power);
-        robot.mecanumDrive.frontL.setPower(power);
-        robot.mecanumDrive.backL.setPower(power);
+        robot.mecanumDrive.frontR.setPower(power);
+        robot.mecanumDrive.backR.setPower(power);
+        robot.mecanumDrive.frontL.setPower(-power);
+        robot.mecanumDrive.backL.setPower(-power);
     }
     public void driveSideways(double power){
         //treat left as positive
-        robot.mecanumDrive.frontR.setPower(-power);
-        robot.mecanumDrive.backR.setPower(power);
-        robot.mecanumDrive.frontL.setPower(-power);
-        robot.mecanumDrive.backL.setPower(power);
+        robot.mecanumDrive.frontR.setPower(power);
+        robot.mecanumDrive.backR.setPower(-power);
+        robot.mecanumDrive.frontL.setPower(power);
+        robot.mecanumDrive.backL.setPower(-power);
     }
 
+
     public void turnLeft(double power){
-        robot.mecanumDrive.frontR.setPower(-power);
-        robot.mecanumDrive.backR.setPower(-power);
-        robot.mecanumDrive.frontL.setPower(-power);
-        robot.mecanumDrive.backL.setPower(-power);
+        robot.mecanumDrive.frontR.setPower(power);
+        robot.mecanumDrive.backR.setPower(power);
+        robot.mecanumDrive.frontL.setPower(power);
+        robot.mecanumDrive.backL.setPower(power);
     }
 }

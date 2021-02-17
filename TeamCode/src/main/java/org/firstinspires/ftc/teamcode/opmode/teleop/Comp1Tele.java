@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.opmode.teleop;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.hardware.FullRobot;
 import org.firstinspires.ftc.teamcode.odometry.InitialPosCalcs;
@@ -12,6 +13,9 @@ import java.lang.annotation.ElementType;
 public class Comp1Tele extends LinearOpMode {
     private FullRobot robot;
     public ElapsedTime time;
+    double TARGET_VOLTAGE = 12.3;
+    double voltage = 0;
+    double kP = 0.18;
 
     @Override
     public void runOpMode() throws InterruptedException{
@@ -22,6 +26,8 @@ public class Comp1Tele extends LinearOpMode {
         waitForStart();
 
         while(!isStopRequested()) {
+            telemetry.addData("XPos", robot.mecanumDrive.getPosition().getX());
+            telemetry.update();
             /////////////////////////////////////////////////////////////////////
 
             //************************ GAMEPAD 1 DRIVE ************************//
@@ -30,7 +36,7 @@ public class Comp1Tele extends LinearOpMode {
             // Basic Driving Controls
             double LeftY = -gamepad1.left_stick_y;
             double LeftX = gamepad1.left_stick_x;
-            double RightX = gamepad1.right_stick_x;
+            double RightX = -gamepad1.right_stick_x;
             //Deadzones
             if (Math.abs(LeftX) <= 0.05) {
                 LeftX = 0;
@@ -79,10 +85,10 @@ public class Comp1Tele extends LinearOpMode {
             }
 
             // Sets motor powers
-            robot.mecanumDrive.frontL.setPower(-frontLeft);
-            robot.mecanumDrive.frontR.setPower(frontRight);
-            robot.mecanumDrive.backL.setPower(-backLeft);
-            robot.mecanumDrive.backR.setPower(backRight);
+            robot.mecanumDrive.frontL.setPower(frontLeft);
+            robot.mecanumDrive.backR.setPower(-backRight);
+            robot.mecanumDrive.frontR.setPower(-frontRight);
+            robot.mecanumDrive.backL.setPower(backLeft);
 
             // Intakes
             if (gamepad1.left_bumper == true) {
@@ -110,17 +116,17 @@ public class Comp1Tele extends LinearOpMode {
 
             //Shooter
             if (gamepad2.left_trigger >= 0.25) {
-                robot.launchpad.shoot(1);//need to confirm
+                voltageShoot(1);
             } else if (gamepad2.a) {              //Test Powers!!!!
-                robot.launchpad.shoot(0.75);
+                voltageShoot(0.75);
             } else if (gamepad2.b) {              //Test Powers!!!!
-                robot.launchpad.shoot(0.5);
+                voltageShoot(0.5);
             } else if (gamepad2.x) {              //Test Powers!!!!
-                robot.launchpad.shoot(0.60);
+                voltageShoot(0.60);
             } else if (gamepad2.y) {              //Test Powers!!!!
-                robot.launchpad.shoot(0.9);
+                voltageShoot(0.9);
             } else {
-                robot.launchpad.shoot(0);
+                voltageShoot(0);
             }
 
             //Conveyor
@@ -132,12 +138,21 @@ public class Comp1Tele extends LinearOpMode {
                 robot.launchpad.setConveyor(0);
             }
 
-            telemetry.addData("FL Speed", frontLeft);
-            telemetry.addData("FR Speed", frontRight);
-            telemetry.addData("BL Speed", backLeft);
-            telemetry.addData("BR Speed", backRight);
+            telemetry.addData("Left Encoder", robot.mecanumDrive.getLeftPosition());
+            telemetry.addData("Right Encoder", robot.mecanumDrive.getRightPosition());
+            telemetry.addData("Center Encoder", robot.mecanumDrive.getCenterPosition());
             telemetry.update();
         }
 
+    }
+    public double batteryVoltage(){
+        return this.hardwareMap.voltageSensor.iterator().next().getVoltage();
+    }
+    public void voltageShoot(double power) {
+        voltage = batteryVoltage();
+        double error = TARGET_VOLTAGE - voltage;
+        double motorOut = (error * kP) + power;
+        motorOut = Range.clip(motorOut, 0, 1);
+        robot.launchpad.shoot(motorOut);
     }
 }

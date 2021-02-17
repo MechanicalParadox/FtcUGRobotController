@@ -110,10 +110,10 @@ public class MecanumDrive extends InitialPosCalcs {
         }*/
 
         // Sets motor powers
-        frontL.setPower(-frontLeft);
-        frontR.setPower(frontRight);
-        backL.setPower(-backLeft);
-        backR.setPower(backRight);
+        frontL.setPower(frontLeft);
+        frontR.setPower(-frontRight);
+        backL.setPower(backLeft);
+        backR.setPower(-backRight);
     }
 //determine encoder changes
     public double getRawLeftPosition() {

@@ -33,7 +33,7 @@ public abstract class InitialPosCalcs {
             dTheta = (dL - dR)/chassisWidth;
 
             //find x by parts
-            double xSides = (1-Math.cos(dTheta))*(dR+dL)/(2*dTheta);
+            double xSides = (1-Math.cos(+dTheta))*(dR+dL)/(2*dTheta);
             double xCenter = Math.sin(dTheta)*dC/dTheta;
             double dX = xSides + xCenter;
 
@@ -47,13 +47,13 @@ public abstract class InitialPosCalcs {
             theta += dTheta;
 
             posEstimate = new Pos2d(x, y, theta);
-            lastWheelPositions = getWheelPositions();
+            //lastWheelPositions = getWheelPositions();
         }
-        //lastWheelPositions = wheelPosiitons;
+        lastWheelPositions = wheelPositons;
     }
 
     public double getDeltaX(){return x;}
-    public abstract List<Double> getWheelPositions();
+
 
     public Pos2d getPosEstimate(){
         update();
@@ -73,4 +73,5 @@ public abstract class InitialPosCalcs {
     public Pos2d plus(Pos2d other) {
         return new Pos2d(x + other.getX(), y + other.getY(), theta + other.getHeading());
     }
+    public abstract List<Double> getWheelPositions();
 }

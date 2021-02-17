@@ -4,11 +4,19 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 public class Launchpad {
     public static DcMotorEx flywheel;
+    public static VoltageSensor voltageSensor;
     private CRServo conveyor;
     LinearOpMode OpMode;
+
+    private int flyEncoder = 0;
+    private int flyLastEncover = 0;
+    private long flyVelocityTime, flyLastVelocityTime = 0;
+    private double flyVelocity;
+    private double tolerance = 0.5e-7;
 
     public Launchpad(FullRobot robot, HardwareMap map, LinearOpMode OpMode){
         this.OpMode = OpMode;
@@ -19,6 +27,7 @@ public class Launchpad {
 
         conveyor = map.get(CRServo.class, "C");
         conveyor.getDirection();
+
     }
 
     public void shoot(double power){
@@ -29,26 +38,15 @@ public class Launchpad {
         conveyor.setPower(power);
     }
 
-    /*public double fLastEncoder = 0;
-    public void velocityShot()
-    {
-        public double fVelocityTime = System.nanoTime();
-        public double fEncoder = flywheel.getCurrentPosition();
-        public double fVelocity = (double)(fEncoder - fLastEncoder) / (fVelocityTime - fLastVelocityTime);
+    public void encoderRegulator(double flyTarget){
+        flyVelocityTime = System.nanoTime();
+        flyEncoder = flywheel.getCurrentPosition();
+        flyVelocity = (double)(flyEncoder - flyLastEncover) / (flyLastVelocityTime - flyVelocityTime);
 
-        if(fVelocity >= (fTarget + tolerance))
-        {
-            setFPower(0.8);
+        if(flyVelocity >= (flyTarget + tolerance)){
+            shoot(flyTarget);
         }
-
-        else if(fVelocity < (fTarget - tolerance))
-        {
-            setFPower(0.8);
-        }
-
-        fLastEncoder = fEncoder;
-        fLastVelocityTime = fVelocityTime;
-    }*/
+    }
 
 
 }
