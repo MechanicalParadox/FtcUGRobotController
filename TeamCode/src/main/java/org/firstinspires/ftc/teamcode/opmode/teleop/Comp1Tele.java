@@ -123,7 +123,7 @@ public class Comp1Tele extends LinearOpMode {
                 robot.launchpad.shoot(0.5);
             } else if (gamepad2.x) {              //Test Powers!!!!
                 robot.launchpad.shoot(0.60);
-            } else if (gamepad2.y) {              //Test Powers!!!!
+            } else if (gamepad2.left_bumper) {              //Test Powers!!!!
                 robot.launchpad.shoot(0.9);
             } else {
                 robot.launchpad.shoot(0);
@@ -136,6 +136,13 @@ public class Comp1Tele extends LinearOpMode {
                 robot.launchpad.setConveyor(-1.0);
             } else {
                 robot.launchpad.setConveyor(0);
+            }
+
+            //Wobble Grabber
+            if (gamepad2.x){
+                robot.wobbleGoal.WobbleGrab(true);
+            } else{
+                robot.wobbleGoal.WobbleGrab(false);
             }
 
             telemetry.addData("Left Encoder", robot.mecanumDrive.getLeftPosition());

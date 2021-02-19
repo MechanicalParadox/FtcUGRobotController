@@ -10,6 +10,7 @@ public class FullRobot {
     public MecanumDrive mecanumDrive;
     public IntakeTransition intake;
     public Launchpad launchpad;
+    public WobbleGoal wobbleGoal;
 
     private OpMode master;
     public Thread subsystemExector;
@@ -20,6 +21,6 @@ public class FullRobot {
         mecanumDrive = new MecanumDrive(this, map, telemetry, OpMode);
         intake = new IntakeTransition(this, map, OpMode);
         launchpad = new Launchpad(this, map, OpMode);
-
+        wobbleGoal = new WobbleGoal(this, map, OpMode);
     }
 }
