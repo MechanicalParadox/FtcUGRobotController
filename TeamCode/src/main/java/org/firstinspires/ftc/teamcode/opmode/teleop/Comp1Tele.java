@@ -116,17 +116,17 @@ public class Comp1Tele extends LinearOpMode {
 
             //Shooter
             if (gamepad2.left_trigger >= 0.25) {
-                voltageShoot(1);
+                robot.launchpad.shoot(1);
             } else if (gamepad2.a) {              //Test Powers!!!!
-                voltageShoot(0.75);
+                robot.launchpad.shoot(0.75);
             } else if (gamepad2.b) {              //Test Powers!!!!
-                voltageShoot(0.5);
+                robot.launchpad.shoot(0.5);
             } else if (gamepad2.x) {              //Test Powers!!!!
-                voltageShoot(0.60);
+                robot.launchpad.shoot(0.60);
             } else if (gamepad2.y) {              //Test Powers!!!!
-                voltageShoot(0.9);
+                robot.launchpad.shoot(0.9);
             } else {
-                voltageShoot(0);
+                robot.launchpad.shoot(0);
             }
 
             //Conveyor

@@ -20,7 +20,7 @@ import java.util.List;
 public class RightPosFrameGrabber extends OpenCvPipeline {
     public Filter colorFilter = new ColorFilter();
 
-    public double leftGuide = 320; // Need to confirm
+    public double leftGuide = 320; //Only used for testing purposes
     //public double rightGuide = 320;
     public double mask = 0; // Need to confirm
     public double mask2 = 0;

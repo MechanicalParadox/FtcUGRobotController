@@ -74,9 +74,9 @@ public class straferChassis extends LinearOpMode {
 
             // Sets motor powers
             robot.mecanumDrive.frontL.setPower(-frontLeft);
+            robot.mecanumDrive.backR.setPower(backRight);
             robot.mecanumDrive.frontR.setPower(frontRight);
             robot.mecanumDrive.backL.setPower(-backLeft);
-            robot.mecanumDrive.backR.setPower(backRight);
         }
 
     }
