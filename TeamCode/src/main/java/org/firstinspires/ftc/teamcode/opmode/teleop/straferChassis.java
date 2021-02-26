@@ -25,9 +25,9 @@ public class straferChassis extends LinearOpMode {
             telemetry.addData("leftEncoder", robot.mecanumDrive.getLeftPosition());
             telemetry.addData("rightEncoder", robot.mecanumDrive.getRightPosition());
             telemetry.addData("centerEncoder", robot.mecanumDrive.getCenterPosition());
-            telemetry.addData("dX", robot.mecanumDrive.getPosition().getX());
+            //telemetry.addData("dX", robot.mecanumDrive.getPosition().getX());
             //telemetry.addData("x", InitialPosCalcs.getDeltaX());
-            telemetry.addData("dY", robot.mecanumDrive.getPosition().getY());
+            //telemetry.addData("dY", robot.mecanumDrive.getPosition().getY());
             telemetry.update();
 
 

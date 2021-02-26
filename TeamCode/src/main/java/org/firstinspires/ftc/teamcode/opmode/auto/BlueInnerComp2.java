@@ -69,7 +69,7 @@ public class BlueInnerComp2 extends LinearOpMode {
                 RightPosFrameGrabber.threshold -= 0.001;
             }
 
-            robot.wobbleGoal.WobbleGrab(true);
+            robot.wobbleGoal.WobbleGrab(false);
 
             telemetry.addData("Position", RightPosFrameGrabber.position);
             telemetry.addData("Position", RightPosFrameGrabber.position);

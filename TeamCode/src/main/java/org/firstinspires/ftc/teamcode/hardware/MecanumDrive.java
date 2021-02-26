@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-public class MecanumDrive extends InitialPosCalcs {
+public class MecanumDrive {
     public static DcMotorEx frontR;
     public static DcMotorEx frontL;
     public static DcMotorEx backR;
@@ -24,7 +24,6 @@ public class MecanumDrive extends InitialPosCalcs {
     LinearOpMode OpMode;
 
     public MecanumDrive(FullRobot robot, HardwareMap map, Telemetry telemetry, LinearOpMode OpMode){
-        super(telemetry);
         this.OpMode = OpMode;
 // match with phone names
         frontR = map.get(DcMotorEx.class, "FR");
@@ -142,10 +141,10 @@ public class MecanumDrive extends InitialPosCalcs {
         return ((Math.PI * 2.83) / 1440 * frontR.getCurrentPosition());
     }
 
-    public Pos2d getPosition() {
+    /*public Pos2d getPosition() {
         //update();
         return getPosEstimate();
-    }
+    }*/
 
     /**
      * creates a unique filename for logging
@@ -164,12 +163,12 @@ public class MecanumDrive extends InitialPosCalcs {
      *
      * @return
      */
-    @Override
+    /*@Override
     public List<Double> getWheelPositions() {
         return Arrays.asList(
                 getLeftPosition(),
                 getRightPosition(),
                 getCenterPosition()
         );
-    }
+    }*/
 }

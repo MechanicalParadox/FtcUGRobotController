@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -17,17 +19,35 @@ public class Comp1Tele extends LinearOpMode {
     double voltage = 0;
     double kP = 0.18;
 
+    InitialPosCalcs initialPosCalcs;
+    final double INCHES_PER_TICK = (Math.PI * 2.83)/1440; //May be unneccessary
+
+    InitialPosCalcs PosCalcUpdate;
     @Override
     public void runOpMode() throws InterruptedException{
         robot = new FullRobot(this, hardwareMap, telemetry);
         time = new ElapsedTime();
 
         robot.mecanumDrive.reset();
+        robot.wobbleGoal.runWithoutEncoders();
         waitForStart();
+        //Start the Basic Position Calculations
+        PosCalcUpdate = new InitialPosCalcs(robot.mecanumDrive.frontL, robot.mecanumDrive.frontR, robot.mecanumDrive.backL);
 
         while(!isStopRequested()) {
-            telemetry.addData("XPos", robot.mecanumDrive.getPosition().getX());
-            telemetry.update();
+            PosCalcUpdate.InitialPosCalcsUpdate();
+            //Display the global position coordinates
+            telemetry.addData("X Position", PosCalcUpdate.returnXCoordinate()*INCHES_PER_TICK);
+            telemetry.addData("Y Position", PosCalcUpdate.returnYCoordinate()*INCHES_PER_TICK);
+            telemetry.addData("Theta(Degrees", PosCalcUpdate.returnTheta());
+
+            //Check dX and dY
+            telemetry.addData("DX", PosCalcUpdate.getDeltaX());
+
+            //Check standard encoder positions
+            telemetry.addData("Left Encoder", robot.mecanumDrive.getLeftPosition());
+            telemetry.addData("Right Encoder", robot.mecanumDrive.getRightPosition());
+            telemetry.addData("Center Encoder", robot.mecanumDrive.getCenterPosition());
             /////////////////////////////////////////////////////////////////////
 
             //************************ GAMEPAD 1 DRIVE ************************//
@@ -117,12 +137,8 @@ public class Comp1Tele extends LinearOpMode {
             //Shooter
             if (gamepad2.left_trigger >= 0.25) {
                 robot.launchpad.shoot(1);
-            } else if (gamepad2.a) {              //Test Powers!!!!
-                robot.launchpad.shoot(0.75);
             } else if (gamepad2.b) {              //Test Powers!!!!
                 robot.launchpad.shoot(0.5);
-            } else if (gamepad2.x) {              //Test Powers!!!!
-                robot.launchpad.shoot(0.60);
             } else if (gamepad2.left_bumper) {              //Test Powers!!!!
                 robot.launchpad.shoot(0.9);
             } else {
@@ -145,9 +161,37 @@ public class Comp1Tele extends LinearOpMode {
                 robot.wobbleGoal.WobbleGrab(false);
             }
 
-            telemetry.addData("Left Encoder", robot.mecanumDrive.getLeftPosition());
-            telemetry.addData("Right Encoder", robot.mecanumDrive.getRightPosition());
-            telemetry.addData("Center Encoder", robot.mecanumDrive.getCenterPosition());
+            /*if(gamepad2.a){
+                robot.wobbleGoal.WobbleLift(3);
+            } else if(gamepad2.y){
+                robot.wobbleGoal.WobbleLift(2);
+            } else {
+                robot.wobbleGoal.WobbleLift(0);
+            }*/
+
+            if(gamepad2.a){
+                robot.wobbleGoal.runWithoutEncoders();
+                robot.wobbleGoal.WobbleHold(true);
+            } else if(gamepad2.dpad_down == true){
+                robot.wobbleGoal.runWithoutEncoders();
+                robot.wobbleGoal.WobbleScore(-1);
+                telemetry.addData("Wobble Score", "Down");
+                telemetry.update();
+            } else if (gamepad2.dpad_up == true){
+                robot.wobbleGoal.runWithoutEncoders();
+                robot.wobbleGoal.WobbleScore(1);
+                telemetry.addData("Wobble Score", "Up");
+                telemetry.update();
+            } else {
+                robot.wobbleGoal.runWithoutEncoders();
+                robot.wobbleGoal.WobbleScore(0);
+                telemetry.addData("Wobble Score", "Zero");
+                telemetry.update();
+            }
+            telemetry.addData("Wobble Position", robot.wobbleGoal.wobbleScorer.getCurrentPosition());
+            //telemetry.addData("Left Encoder", robot.mecanumDrive.getLeftPosition());
+            //telemetry.addData("Right Encoder", robot.mecanumDrive.getRightPosition());
+            //telemetry.addData("Center Encoder", robot.mecanumDrive.getCenterPosition());
             telemetry.update();
         }
 
